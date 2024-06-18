@@ -1,0 +1,38 @@
+@import './_variables.scss';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0;
+}
+html,
+input,
+button {
+  font-family: 'Poppins', sans-serif;
+  background: $light;
+  color: $dark;
+}
+.app-container {
+  margin: 0 auto;
+  width: 90%;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+.header {
+  text-align: center;
+  text-transform: uppercase;
+  padding: 10px;
+  color: $info;
+  height: 5%;
+}
+@media only screen and (max-width: 480px) {
+  .app-container {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+  }
+}

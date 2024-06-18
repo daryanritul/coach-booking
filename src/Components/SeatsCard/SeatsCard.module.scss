@@ -1,0 +1,64 @@
+// Seats Card
+@import '../../scss/global.scss';
+
+.card {
+  background: #ffffff;
+  border-radius: 3px;
+
+  border: 1px solid $light-grey;
+  padding: 5px;
+  margin: 5px auto;
+  font-family: Arial, sans-serif;
+  width: 95%;
+  position: relative;
+}
+
+.content {
+  padding: 10px;
+}
+.details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.details p {
+  margin: 5px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.seats {
+  margin-top: 10px;
+}
+
+.seatNumbers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 5px;
+}
+
+.seatNumber {
+  background: $sucess;
+  color: #ffffff;
+  border-radius: 2px;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+}
+.cancelBook {
+  font-size: 12px;
+  border: none;
+  background: $danger;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 3px;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  cursor: pointer;
+}

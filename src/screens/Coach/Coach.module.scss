@@ -1,0 +1,56 @@
+@import '../../scss/variables';
+
+.coach {
+  width: fit-content;
+  height: 100%;
+  border-left: 0.5px solid $light-grey;
+  display: flex;
+  padding: 0 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.coachSeats {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  grid-gap: 5px;
+}
+
+.coachLable {
+  display: flex;
+  font-size: 12px;
+  width: 100%;
+  justify-content: space-evenly;
+  padding: 10px;
+}
+.status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.status::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  border-radius: 2px;
+}
+.status:nth-child(1)::before {
+  background: $sucess;
+}
+.status:nth-child(2)::before {
+  background: $danger;
+}
+.status:nth-child(3)::before {
+  background: $light-grey;
+}
+
+@media only screen and (max-width: 480px) {
+  .coach {
+    width: 100%;
+    height: auto;
+    background: #fff;
+  }
+}
