@@ -9,7 +9,7 @@ export default (state = initialState, { type, payload }) => {
 
       // Return available seats in a given range
       const getAvailableSeats = (start = 1, end = totalSeats) => {
-        const availableSeats = [];
+        let availableSeats = [];
         for (let seat = start; seat <= end; seat++) {
           if (!bookedSeats.includes(seat)) {
             availableSeats.push(seat);
@@ -17,12 +17,33 @@ export default (state = initialState, { type, payload }) => {
         }
         return availableSeats;
       };
+      // to get the available seats in sequence in a row
+      const getAvailableSeatsInSeq = (start = 1, end = totalSeats) => {
+        let availableSeats = [];
+        for (let seat = start; seat <= end; seat++) {
+          if (availableSeats.length >= payload) {
+            return availableSeats;
+          }
+          if (bookedSeats.includes(seat)) {
+            availableSeats = [];
+          } else {
+            availableSeats.push(seat);
+          }
+        }
+        return availableSeats;
+      };
 
       //  book seats row by row
+      let seatsBackup = []; // store seats backup if not found in sequencially;
       for (let row = 1; row <= Math.ceil(totalSeats / 7); row++) {
         const startSeat = (row - 1) * 7 + 1;
         const endSeat = Math.min(row * 7, totalSeats);
-        const availableSeats = getAvailableSeats(startSeat, endSeat);
+        const nonSeqSeats = getAvailableSeats(startSeat, endSeat);
+        const availableSeats = getAvailableSeatsInSeq(startSeat, endSeat);
+
+        if (nonSeqSeats.length >= payload && seatsBackup.length <= 0) {
+          seatsBackup.push(...nonSeqSeats.slice(0, payload));
+        }
         if (availableSeats.length >= payload) {
           updatedSeats.push(...availableSeats.slice(0, payload));
           return {
@@ -39,8 +60,22 @@ export default (state = initialState, { type, payload }) => {
           };
         }
       }
-
-      // Book for available seats
+      //
+      if (seatsBackup.length > 0) {
+        return {
+          ...state,
+          bookedSeats: [...bookedSeats, ...seatsBackup],
+          myBookings: [
+            ...myBookings,
+            {
+              noOfSeats: seatsBackup.length,
+              seats: seatsBackup,
+              bookTime: Date.now(),
+            },
+          ],
+        };
+      }
+      // Book for throught  available seats
       const availableSeats = getAvailableSeats();
       if (availableSeats.length >= payload) {
         updatedSeats.push(...availableSeats.slice(0, payload));

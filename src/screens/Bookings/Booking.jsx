@@ -8,27 +8,27 @@ const Booking = () => {
   const [seats, setSeats] = useState('');
   const { state, dispatch } = useContext(context);
   const [err, setErr] = useState(false);
-  console.log(state);
 
   const bookTicketHandler = () => {
-    let errMsg = '';
+    let errMsg = false;
     if (!seats) {
       errMsg = 'Invalid Input';
-    } else if (seats > 8 || seats < 0) {
+    } else if (seats > 7 || seats < 0) {
       errMsg = 'You can only book 7 seats at a  time';
     } else if (state.totalSeats === state.bookedSeats.length) {
       errMsg = 'Sorry! Seats Full';
     } else if (seats > state.totalSeats - state.bookedSeats.length) {
       errMsg = 'Not Enough Seats Available';
-    } else {
-      bookSeats(seats)(dispatch);
+    }
+    if (errMsg) {
+      setErr(errMsg);
+      setTimeout(() => {
+        setErr(false);
+      }, 5000);
       setSeats('');
       return;
     }
-    setErr(errMsg);
-    setTimeout(() => {
-      setErr(false);
-    }, 5000);
+    bookSeats(seats)(dispatch);
     setSeats('');
   };
 
@@ -59,9 +59,9 @@ const Booking = () => {
       <div className={sty.mySeats}>
         <h4>My Bookings({state.myBookings.length})</h4>
         {state.myBookings.length ? (
-          state.myBookings.map((data, index) => (
-            <SeatsCard data={data} key={index} />
-          ))
+          state.myBookings
+            .toReversed()
+            .map((data, index) => <SeatsCard data={data} key={index} />)
         ) : (
           <div className={sty.emptyList}>
             <small>Booking List is Empty</small>
