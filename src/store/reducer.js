@@ -5,7 +5,7 @@ export default (state = initialState, { type, payload }) => {
   switch (type) {
     case BOOK_SEATS:
       const { totalSeats, bookedSeats, myBookings } = state;
-      const updatedSeats = [];
+      const updatedSeats = []; //to store bookedSeats
 
       // Return available seats in a given range
       const getAvailableSeats = (start = 1, end = totalSeats) => {
@@ -17,7 +17,7 @@ export default (state = initialState, { type, payload }) => {
         }
         return availableSeats;
       };
-      // to get the available seats in sequence in a row
+      // to get the available seats togather in a row
       const getAvailableSeatsInSeq = (start = 1, end = totalSeats) => {
         let availableSeats = [];
         for (let seat = start; seat <= end; seat++) {
@@ -42,9 +42,11 @@ export default (state = initialState, { type, payload }) => {
         const availableSeats = getAvailableSeatsInSeq(startSeat, endSeat);
 
         if (nonSeqSeats.length >= payload && seatsBackup.length <= 0) {
+          // push only one time
           seatsBackup.push(...nonSeqSeats.slice(0, payload));
         }
         if (availableSeats.length >= payload) {
+          // book in a single row with sequence
           updatedSeats.push(...availableSeats.slice(0, payload));
           return {
             ...state,
@@ -60,7 +62,7 @@ export default (state = initialState, { type, payload }) => {
           };
         }
       }
-      //
+      //Book in a single row without sequence
       if (seatsBackup.length > 0) {
         return {
           ...state,
@@ -75,7 +77,7 @@ export default (state = initialState, { type, payload }) => {
           ],
         };
       }
-      // Book for throught  available seats
+      // Book for throught available seats
       const availableSeats = getAvailableSeats();
       if (availableSeats.length >= payload) {
         updatedSeats.push(...availableSeats.slice(0, payload));

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import sty from './Booking.module.scss';
-import { bookSeats, cancelBooking } from '../../store/actions';
+import { bookSeats } from '../../store/actions';
 import { context } from '../../store/store';
 import SeatsCard from '../../Components/SeatsCard/SeatsCard';
 
